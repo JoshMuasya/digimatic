@@ -9,6 +9,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <PopupOnLoad />
       <Hero />
+      
       <Services />
       <Project />
       <Team />
