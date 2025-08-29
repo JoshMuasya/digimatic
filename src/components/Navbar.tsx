@@ -131,7 +131,7 @@ const Navbar = () => {
                                     {item.name}
                                 </motion.a>
                             ))}
-                            <Button className="w-full mt-4 bg-gradient-primary text-white shadow-lg hover:scale-105 transition-transform">
+                            <Button className="w-full mt-4 bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:scale-105 transition-transform">
                                 Get Started
                             </Button>
                         </div>
