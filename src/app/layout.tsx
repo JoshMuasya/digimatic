@@ -44,7 +44,6 @@ export default function RootLayout({
       >
         <ToastProvider />
         <Navbar />
-        <PopupOnLoad />
         {children}
         <Footer />
       </body>
