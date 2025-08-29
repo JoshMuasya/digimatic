@@ -115,7 +115,7 @@ const Hero = () => {
                     {/* Stats */}
                     <motion.div
                         variants={itemVariants}
-                        className="grid grid-cols-3 gap-8 pt-16 border-t border-glass-border"
+                        className="grid grid-cols-3 gap-8 pt-16 border-t border-border"
                     >
                         {[
                             { number: 500, label: "Projects Delivered" },

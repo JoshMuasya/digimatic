@@ -149,7 +149,7 @@ const Footer = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true }}
-                    className="border-t border-glass-border pt-8 mt-12"
+                    className="border-t border-border pt-8 mt-12"
                 >
                     <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                         <div className="flex space-x-6">
@@ -159,7 +159,7 @@ const Footer = () => {
                                     href={social.href}
                                     whileHover={{ scale: 1.15, rotate: 2 }}
                                     whileTap={{ scale: 0.9 }}
-                                    className="w-10 h-10 bg-gradient-to-br from-card via-primary/40 to-secondary/20 border border-glass-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_#6A0DAD80] transition-all duration-300"
+                                    className="w-10 h-10 bg-gradient-to-br from-card via-primary/40 to-secondary/20 border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_#6A0DAD80] transition-all duration-300"
                                     aria-label={social.label}
                                     title={social.label}
                                 >

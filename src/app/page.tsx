@@ -2,7 +2,6 @@ import Hero from "@/components/Home/Hero";
 import Project from "@/components/Home/Project";
 import Services from "@/components/Home/Services";
 import Team from "@/components/Home/Team";
-import Testimonial from "@/components/Home/Testimonial";
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
       <Services />
       <Project />
       <Team />
-      <Testimonial />
     </div>
   );
 }

@@ -112,7 +112,7 @@ const Navbar = () => {
                         animate={{ opacity: 1, scaleY: 1 }}
                         exit={{ opacity: 0, scaleY: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="origin-top md:hidden bg-glass/95 backdrop-blur-xl border-t border-glass-border"
+                        className="origin-top md:hidden bg-card/95 backdrop-blur-xl border-t border-border"
                     >
                         <div className="px-4 py-6 space-y-4">
                             {navItems.map((item, index) => (

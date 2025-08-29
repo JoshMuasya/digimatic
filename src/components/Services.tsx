@@ -212,7 +212,7 @@ const ServicesCards = () => {
             >
               {/* Subtle animated gradient border for better contrast */}
               <div className="absolute inset-0 rounded-2xl p-[1.5px] bg-gradient-to-br from-primary/30 via-primary/0 to-secondary/30 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative h-full rounded-[14px] p-8 bg-gradient-glass border border-glass-border backdrop-blur-md
+              <div className="relative h-full rounded-[14px] p-8 bg-gradient-glass border border-border backdrop-blur-md
                               group-hover:border-primary/40 transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center mb-6
                                 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -253,7 +253,7 @@ const ServicesCards = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative bg-gradient-glass border border-glass-border rounded-3xl p-8 md:p-12 backdrop-blur-md text-center mt-20 overflow-hidden"
+          className="relative bg-gradient-glass border border-border rounded-3xl p-8 md:p-12 backdrop-blur-md text-center mt-20 overflow-hidden"
         >
           {/* animated gradient sweep under the CTA */}
           <motion.div
@@ -306,7 +306,7 @@ const ServicesCards = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-glass-border">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-border">
             <div className="text-center">
               <div className="text-2xl font-bold text-primary mb-2">Free</div>
               <div className="text-muted-foreground">Initial Consultation</div>
