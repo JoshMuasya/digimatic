@@ -238,7 +238,7 @@ const ServicesCards = () => {
                   variant="ghost"
                   className="w-full group-hover:bg-primary/10 group-hover:text-primary transition-colors"
                 >
-                  <Link href={buttonConfig.href} target="_blank" rel="noopener noreferrer">
+                  <Link href={buttonConfig.href}>
                     {buttonConfig.text}
                   </Link>
                 </Button>

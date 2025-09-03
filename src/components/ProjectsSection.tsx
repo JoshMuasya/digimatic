@@ -181,6 +181,7 @@ const ProjectsSection = () => {
                                 <Link
                                     href={project.link}
                                     className="inline-block mt-4 text-primary font-medium hover:underline"
+                                    target="_blank" rel="noopener noreferrer"
                                 >
                                     View Project →
                                 </Link>
