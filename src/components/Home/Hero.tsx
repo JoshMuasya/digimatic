@@ -7,6 +7,7 @@ import { Button } from "../ui/button"
 import { ArrowRight, Code, Shield, Sparkles, Zap } from "lucide-react"
 import { containerVariants, itemVariants } from "@/lib/Animation/Animation"
 import { AnimatedCounter } from "../CounterComponent"
+import Link from "next/link"
 
 const Hero = () => {
     const [particleCount, setParticleCount] = useState(250)
@@ -100,14 +101,18 @@ const Hero = () => {
                         className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
                     >
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Button size="lg" className="group">
-                                Start Your Project
-                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            <Button asChild size="lg" className="group bg-gradient-to-br from-primary to-secondary">
+                                <Link href="/contact">
+                                    Start Your Project
+                                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </Link>
                             </Button>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Button variant="ghost" size="lg">
-                                View Our Work
+                            <Button asChild variant="ghost" size="lg">
+                                <Link href="/projects">
+                                    View Our Work
+                                </Link>
                             </Button>
                         </motion.div>
                     </motion.div>

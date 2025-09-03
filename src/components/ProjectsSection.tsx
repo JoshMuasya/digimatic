@@ -59,7 +59,7 @@ const ProjectsSection = () => {
             longDescription:
                 "A full-service law firm website built to establish trust and credibility. Features service breakdowns, lawyer profiles, a blog section, and client contact options with a clean, modern design.",
             image: "/nma.png",
-            link: "https://nyiha-mathenge-advocates.vercel.app/",
+            link: "https://nmadvocate.com/",
         },
         {
             title: "NEFEA – Network on Forest Enterprises in Africa",
