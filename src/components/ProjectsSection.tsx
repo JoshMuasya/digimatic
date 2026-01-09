@@ -59,7 +59,16 @@ const ProjectsSection = () => {
             longDescription:
                 "A full-service law firm website built to establish trust and credibility. Features service breakdowns, lawyer profiles, a blog section, and client contact options with a clean, modern design.",
             image: "/nma.png",
-            link: "https://nmadvocate.com/",
+            link: "https://nyihamathengelaw.com/",
+        },
+        {
+            title: "Wilhide Bakers – Website",
+            shortDescription:
+                "A modern bakery website showcasing delightful products and ordering features. (Under Development)",
+            longDescription:
+                "A clean, elegant, and mobile-friendly website for Wilhide Bakers, designed with Next.js and Tailwind CSS. The platform highlights bakery products, custom cake options, and smooth browsing experiences. Features such as online ordering, animations, and admin management are currently under development.",
+            image: "/wilhide.png",
+            link: "https://wilhade-bakers.vercel.app/",
         },
         {
             title: "NEFEA – Network on Forest Enterprises in Africa",
