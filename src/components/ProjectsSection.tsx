@@ -62,6 +62,15 @@ const ProjectsSection = () => {
             link: "https://nyihamathengelaw.com/",
         },
         {
+            title: "Gatherly",
+            shortDescription:
+                "A modern event management platform currently in development, designed to simplify planning and coordination.",
+            longDescription:
+                "Gatherly is an innovative event management platform built to streamline event planning, coordination, and guest engagement. It will feature RSVP management, role-based access (admins, organizers, and staff), real-time updates, and an intuitive dashboard for seamless control. Designed with a modern, user-friendly interface and scalable architecture, Gatherly aims to simplify both small and large-scale event operations. The project is currently in progress, with core functionalities actively being developed and refined.",
+            image: "/gatherly.png",
+            link: "https://gatherly-three-rho.vercel.app/",
+        },
+        {
             title: "Wilhide Bakers – Website",
             shortDescription:
                 "A modern bakery website showcasing delightful products and ordering features. (Under Development)",
