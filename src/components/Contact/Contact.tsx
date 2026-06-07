@@ -111,12 +111,13 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-card via-secondary/20 to-primary/40 border border-glass-border rounded-3xl p-8 backdrop-blur-md"
+            className="bg-gradient-to-br from-card via-secondary/20 to-primary/40 border border-glass-border rounded-3xl p-8 backdrop-blur-md flex flex-col items-center justify-center"
           >
-            <h2 className="text-3xl font-bold mb-6 text-foreground">
+            <h2 className="text-3xl font-bold mb-6 text-foreground w-full">
               Send us a message
             </h2>
 
+            <div className="w-full max-w-lg mx-auto">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -176,12 +177,16 @@ const Contact = () => {
                   )}
                 />
 
-                <Button type="submit" size="lg" className="w-full group">
-                  Send Message
-                  <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <Button type="submit" size="lg" className="w-full group" disabled={loading}>
+                  {loading ? "Sending…" : "Send Message"}
+                  {!loading && <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
                 </Button>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  We typically respond within 1 business day (Mon–Fri, 8 am–6 pm EAT).
+                </p>
               </form>
             </Form>
+            </div>
           </motion.div>
 
           {/* Office Location */}

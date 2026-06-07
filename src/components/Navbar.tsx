@@ -6,6 +6,7 @@ import { Button } from "./ui/button"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import Link from "next/link"
 
 const navItems = [
     { name: "Home", href: "/" },
@@ -85,10 +86,11 @@ const Navbar = () => {
 
                         ))}
                         <Button
+                            asChild
                             size="sm"
                             className="bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:scale-105 transition-transform"
                         >
-                            Get Started
+                            <Link href="/contact">Get a Quote</Link>
                         </Button>
                     </div>
 
@@ -123,16 +125,16 @@ const Navbar = () => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1 }}
                                     onClick={() => setIsOpen(false)}
-                                    className={`block text-foreground transition-colors duration-300 ${pathname === item.href
-                                        ? "text-primary font-semibold"
-                                        : "hover:text-primary"
+                                    className={`block py-1.5 pl-3 border-l-2 transition-all duration-300 ${pathname === item.href
+                                        ? "text-primary font-semibold border-primary"
+                                        : "text-foreground hover:text-primary border-transparent hover:border-primary/40"
                                         }`}
                                 >
                                     {item.name}
                                 </motion.a>
                             ))}
-                            <Button className="w-full mt-4 bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:scale-105 transition-transform">
-                                Get Started
+                            <Button asChild className="w-full mt-4 bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:scale-105 transition-transform">
+                                <Link href="/contact">Get a Quote</Link>
                             </Button>
                         </div>
                     </motion.div>

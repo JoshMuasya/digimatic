@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import React, { useState } from "react"
@@ -36,11 +36,15 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
+type Category = "All" | "Web" | "App" | "NGO" | "E-commerce"
+
+const CATEGORIES: Category[] = ["All", "Web", "App", "E-commerce", "NGO"]
+
 const ProjectsSection = () => {
     const [open, setOpen] = useState(false)
+    const [activeCategory, setActiveCategory] = useState<Category>("All")
     const pathname = usePathname()
     const isProjectsPage = pathname.startsWith("/projects")
-    const [loading, setLoading] = useState(false)
 
     const projects = [
         {
@@ -51,6 +55,8 @@ const ProjectsSection = () => {
                 "A modern and responsive developer portfolio built with Next.js and Tailwind CSS. Highlights my skills in full-stack development, animations, and optimized performance across devices.",
             image: "/portfolio.png",
             link: "https://josh-portfolio-eight.vercel.app/",
+            tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+            category: "Web" as Category,
         },
         {
             title: "Nyiha-Mathenge Advocates",
@@ -60,24 +66,30 @@ const ProjectsSection = () => {
                 "A full-service law firm website built to establish trust and credibility. Features service breakdowns, lawyer profiles, a blog section, and client contact options with a clean, modern design.",
             image: "/nma.png",
             link: "https://nyihamathengelaw.com/",
+            tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+            category: "Web" as Category,
         },
         {
             title: "Gatherly",
             shortDescription:
                 "A modern event management platform currently in development, designed to simplify planning and coordination.",
             longDescription:
-                "Gatherly is an innovative event management platform built to streamline event planning, coordination, and guest engagement. It will feature RSVP management, role-based access (admins, organizers, and staff), real-time updates, and an intuitive dashboard for seamless control. Designed with a modern, user-friendly interface and scalable architecture, Gatherly aims to simplify both small and large-scale event operations. The project is currently in progress, with core functionalities actively being developed and refined.",
+                "Gatherly is an innovative event management platform built to streamline event planning, coordination, and guest engagement. It will feature RSVP management, role-based access (admins, organizers, and staff), real-time updates, and an intuitive dashboard for seamless control.",
             image: "/gatherly.png",
             link: "https://gatherly-three-rho.vercel.app/",
+            tags: ["Next.js", "PostgreSQL", "Prisma"],
+            category: "App" as Category,
         },
         {
             title: "Wilhide Bakers – Website",
             shortDescription:
                 "A modern bakery website showcasing delightful products and ordering features. (Under Development)",
             longDescription:
-                "A clean, elegant, and mobile-friendly website for Wilhide Bakers, designed with Next.js and Tailwind CSS. The platform highlights bakery products, custom cake options, and smooth browsing experiences. Features such as online ordering, animations, and admin management are currently under development.",
+                "A clean, elegant, and mobile-friendly website for Wilhide Bakers, designed with Next.js and Tailwind CSS. The platform highlights bakery products, custom cake options, and smooth browsing experiences.",
             image: "/wilhide.png",
             link: "https://wilhade-bakers.vercel.app/",
+            tags: ["Next.js", "Tailwind CSS", "E-commerce"],
+            category: "E-commerce" as Category,
         },
         {
             title: "NEFEA – Network on Forest Enterprises in Africa",
@@ -87,6 +99,8 @@ const ProjectsSection = () => {
                 "An international NGO website dedicated to promoting African gums and resins as key non-timber forest products. Includes organizational history, mission, resources, and initiatives across Africa.",
             image: "/nefea.png",
             link: "https://www.nefea.org/",
+            tags: ["WordPress", "Custom Theme", "SEO"],
+            category: "NGO" as Category,
         },
         {
             title: "Twilight Luxe Creations",
@@ -96,6 +110,8 @@ const ProjectsSection = () => {
                 "A premium event management website showcasing services such as planning, styling, catering, photography, entertainment, rentals, invitations, logistics, and corporate event solutions.",
             image: "/luxe.png",
             link: "https://twilight-luxe-creations.vercel.app/",
+            tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
+            category: "Web" as Category,
         },
         {
             title: "Kirie Scripts",
@@ -105,10 +121,17 @@ const ProjectsSection = () => {
                 "Kirie Scripts is a work-in-progress project with future potential for automation tools and custom scripts. The site is currently in its early stages of development.",
             image: "/kirie.png",
             link: "https://kirie-scripts.vercel.app/",
+            tags: ["Next.js", "TypeScript"],
+            category: "App" as Category,
         },
     ]
 
-    const visibleProjects = isProjectsPage ? projects : projects.slice(0, 3)
+    const filtered =
+        activeCategory === "All"
+            ? projects
+            : projects.filter((p) => p.category === activeCategory)
+
+    const visibleProjects = isProjectsPage ? filtered : filtered.slice(0, 3)
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -120,9 +143,7 @@ const ProjectsSection = () => {
     })
 
     async function onSubmit(values: FormValues) {
-        setLoading(true)
         try {
-            // Example: send to API
             await fetch("/api/project", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -132,10 +153,8 @@ const ProjectsSection = () => {
             toast.success("✅ Request sent! We'll get back to you soon.")
             setOpen(false)
             form.reset()
-        } catch (error) {
+        } catch {
             toast.error("❌ Something went wrong. Please try again.")
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -158,61 +177,110 @@ const ProjectsSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="text-muted-foreground max-w-2xl mx-auto mb-12"
+                    className="text-muted-foreground max-w-2xl mx-auto mb-10"
                 >
                     {isProjectsPage
                         ? "Browse through all our works and see how we help businesses succeed."
                         : "Here are some of our latest works. Each project highlights our dedication to innovation and user experience."}
                 </motion.p>
 
-                {/* Project Grid */}
-                <div className="grid gap-8 md:grid-cols-3">
-                    {visibleProjects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.6,
-                                ease: "easeOut",
-                                delay: index * 0.2,
-                            }}
-                            viewport={{ once: true }}
-                            className="group relative rounded-2xl overflow-hidden shadow-lg bg-card hover:shadow-2xl transition-shadow duration-300"
-                        >
-                            <div className="relative w-full h-64">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
-                                    {project.title}
-                                </h3>
-                                <p className="text-muted-foreground mt-2">
-                                    {isProjectsPage ? project.longDescription : project.shortDescription}
-                                </p>
+                {/* Category filter — only shown on projects page */}
+                {isProjectsPage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="flex flex-wrap justify-center gap-2 mb-12"
+                    >
+                        {CATEGORIES.map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
+                                    activeCategory === cat
+                                        ? "bg-gradient-to-br from-primary to-secondary text-white border-transparent shadow-[var(--shadow-elegant)]"
+                                        : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                                }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </motion.div>
+                )}
 
-                                <Link
-                                    href={project.link}
-                                    className="inline-block mt-4 text-primary font-medium hover:underline"
-                                    target="_blank" rel="noopener noreferrer"
-                                >
-                                    View Project →
-                                </Link>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                {/* Project Grid */}
+                <AnimatePresence mode="popLayout">
+                    <motion.div
+                        key={activeCategory}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="grid gap-8 md:grid-cols-3"
+                    >
+                        {visibleProjects.map((project, index) => (
+                            <motion.div
+                                key={project.title}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    ease: "easeOut",
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true }}
+                                className="group relative rounded-2xl overflow-hidden shadow-[var(--shadow-elegant)] bg-card border border-border backdrop-blur-md hover:shadow-[var(--shadow-glow)] hover:border-primary/40 transition-all duration-300"
+                            >
+                                <div className="relative w-full h-56">
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    {/* Category badge on image */}
+                                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/80 text-white backdrop-blur-sm">
+                                        {project.category}
+                                    </span>
+                                </div>
+                                <div className="p-6">
+                                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-muted-foreground mt-2 text-sm">
+                                        {isProjectsPage ? project.longDescription : project.shortDescription}
+                                    </p>
+
+                                    {/* Tech stack badges */}
+                                    <div className="flex flex-wrap gap-1.5 mt-4">
+                                        {project.tags.map((tag) => (
+                                            <span
+                                                key={tag}
+                                                className="px-2 py-0.5 rounded-md text-xs border border-border/80 text-muted-foreground bg-card/80"
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <Link
+                                        href={project.link}
+                                        className="inline-block mt-4 text-primary text-sm font-medium hover:underline"
+                                        target="_blank" rel="noopener noreferrer"
+                                    >
+                                        View Project →
+                                    </Link>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </AnimatePresence>
 
                 {/* CTA Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+                    transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true }}
                     className="mt-16 bg-gradient-to-r from-primary/90 to-secondary/90 rounded-2xl p-10 shadow-lg"
                 >
@@ -222,7 +290,7 @@ const ProjectsSection = () => {
                     <p className="text-white/80 mb-6 max-w-2xl mx-auto">
                         {isProjectsPage
                             ? "Tell us more about your project or reach out directly."
-                            : "Let’s bring your ideas to life with our expertise in design and development."}
+                            : "Let's bring your ideas to life with our expertise in design and development."}
                     </p>
 
                     <div className="flex flex-wrap gap-4 justify-center">
@@ -241,7 +309,6 @@ const ProjectsSection = () => {
                             </>
                         ) : (
                             <>
-                                {/* Popup Form Trigger */}
                                 <Dialog open={open} onOpenChange={setOpen}>
                                     <DialogTrigger asChild>
                                         <Button variant="secondary" className="rounded-xl">

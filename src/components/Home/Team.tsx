@@ -68,28 +68,31 @@ const Team = () => {
         {
             name: "Joshua Muasya",
             role: "CEO & Founder",
+            bio: "Visionary technologist with 5+ years building digital products across East Africa. Leads strategy, client partnerships, and product direction.",
             image: "/josh.png",
             socials: {
-                linkedin: "#",
-                twitter: "#",
+                linkedin: "https://linkedin.com/in/joshuamuasya",
+                twitter: "https://twitter.com/joshuamuasya",
             },
         },
         {
             name: "Cox Musyoki",
             role: "Lead Developer",
+            bio: "Full-stack engineer specialising in Next.js, Node.js, and cloud infrastructure. Turns complex requirements into clean, scalable code.",
             image: "/man.png",
             socials: {
-                github: "#",
-                linkedin: "#",
+                github: "https://github.com/coxmusyoki",
+                linkedin: "https://linkedin.com/in/coxmusyoki",
             },
         },
         {
             name: "Ruth Lee",
             role: "UI/UX Designer",
+            bio: "Human-centred designer who crafts intuitive interfaces and cohesive brand identities. Passionate about accessibility and delightful user experiences.",
             image: "/lady.png",
             socials: {
-                twitter: "#",
-                linkedin: "#",
+                twitter: "https://twitter.com/ruthlee_design",
+                linkedin: "https://linkedin.com/in/ruthlee-design",
             },
         },
     ];
@@ -140,12 +143,12 @@ const Team = () => {
                             key={index}
                             variants={item}
                             whileHover={{ y: -8, scale: 1.03 }}
-                            className="bg-card border border-border rounded-2xl 
-                                       shadow-[var(--shadow-elegant)] 
-                                       hover:shadow-[var(--shadow-glow)] 
-                                       hover:border-primary 
-                                       transition-all duration-300 p-6"
+                            className="group relative rounded-2xl"
                         >
+                            <div className="absolute inset-0 rounded-2xl p-[1.5px] bg-gradient-to-br from-primary/30 via-primary/0 to-secondary/30 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative h-full rounded-[14px] p-6 bg-gradient-to-br from-card via-card to-primary/5 border border-border backdrop-blur-md
+                                            shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-glow)] hover:border-primary/40
+                                            transition-all duration-300">
                             {/* Avatar with gradient ring */}
                             <div className="w-32 h-32 mx-auto relative rounded-full overflow-hidden mb-6 
                                             p-[3px] bg-gradient-to-r from-primary to-secondary">
@@ -162,7 +165,8 @@ const Team = () => {
                             <h3 className="text-xl font-semibold hover:text-primary transition">
                                 {member.name}
                             </h3>
-                            <p className="text-muted-foreground">{member.role}</p>
+                            <p className="text-sm font-medium text-primary/80 mb-3">{member.role}</p>
+                            <p className="text-sm text-muted-foreground leading-relaxed mb-4">{member.bio}</p>
 
                             {/* Social Links */}
                             <div className="flex justify-center gap-4 mt-4">
@@ -181,6 +185,7 @@ const Team = () => {
                                         <FaXTwitter className="w-6 h-6 hover:text-secondary-glow transition" />
                                     </a>
                                 )}
+                            </div>
                             </div>
                         </motion.div>
                     ))}

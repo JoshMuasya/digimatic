@@ -78,6 +78,7 @@ const ServicesCards = () => {
       description:
         "Custom software solutions built with cutting-edge technologies and best practices.",
       features: ["Web Applications", "Desktop Software", "API Development", "System Integration"],
+      startingFrom: "KES 80,000",
     },
     {
       icon: Monitor,
@@ -85,6 +86,7 @@ const ServicesCards = () => {
       description:
         "Responsive websites and mobile applications that engage users and drive results.",
       features: ["Responsive Design", "Mobile Apps", "E-commerce", "CMS Solutions"],
+      startingFrom: "KES 30,000",
     },
     {
       icon: Megaphone,
@@ -92,6 +94,7 @@ const ServicesCards = () => {
       description:
         "Strategic digital marketing campaigns that boost your online presence and ROI.",
       features: ["SEO Optimization", "Social Media", "PPC Campaigns", "Content Strategy"],
+      startingFrom: "KES 15,000 / mo",
     },
     {
       icon: Palette,
@@ -99,6 +102,7 @@ const ServicesCards = () => {
       description:
         "Creative visual solutions that communicate your brand message effectively.",
       features: ["Brand Identity", "UI/UX Design", "Print Design", "Digital Assets"],
+      startingFrom: "KES 10,000",
     },
     {
       icon: Shield,
@@ -106,6 +110,7 @@ const ServicesCards = () => {
       description:
         "Comprehensive security solutions to protect your digital assets and data.",
       features: ["Security Audits", "Threat Assessment", "Data Protection", "Compliance"],
+      startingFrom: "Custom Quote",
     },
     {
       icon: Coins,
@@ -113,6 +118,7 @@ const ServicesCards = () => {
       description:
         "Blockchain and cryptocurrency solutions for the future of finance.",
       features: ["Smart Contracts", "DeFi Solutions", "NFT Platforms", "Tokenization"],
+      startingFrom: "Custom Quote",
     },
   ];
 
@@ -224,7 +230,7 @@ const ServicesCards = () => {
                 <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
 
                 {/* Feature List with Icons */}
-                <ul className="space-y-2 mb-8">
+                <ul className="space-y-2 mb-6">
                   {service.features.map((feature, i) => (
                     <li key={i} className="flex items-center text-sm text-muted-foreground">
                       <CheckCircle2 className="w-4 h-4 text-primary mr-2 shrink-0" />
@@ -232,6 +238,12 @@ const ServicesCards = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Pricing signal */}
+                <div className="flex items-center gap-2 mb-4 py-2 border-t border-border/50">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Starting from</span>
+                  <span className="text-sm font-semibold text-primary">{service.startingFrom}</span>
+                </div>
 
                 <Button
                   asChild

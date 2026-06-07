@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { Button } from "../ui/button"
 import { ArrowRight, Code, Shield, Sparkles, Zap } from "lucide-react"
 import { containerVariants, itemVariants } from "@/lib/Animation/Animation"
-import { AnimatedCounter } from "../CounterComponent"
 import Link from "next/link"
 
 const Hero = () => {
@@ -61,8 +60,8 @@ const Hero = () => {
                         aria-hidden="true"
                     >
                         <div className="relative">
-                            <div className="absolute inset-0 w-10 h-10 bg-primary/20 blur-2xl rounded-full -z-10" />
-                            <item.icon className="w-6 h-6 text-primary/70" />
+                            <div className="absolute inset-0 w-8 h-8 bg-primary/10 blur-xl rounded-full -z-10" />
+                            <item.icon className="w-6 h-6 text-primary/35" />
                         </div>
                     </motion.div>
                 ))}
@@ -77,22 +76,37 @@ const Hero = () => {
             >
                 <motion.div variants={itemVariants} className="space-y-6">
                     <motion.h1
-                        className="text-[clamp(2rem,6vw,4.5rem)] font-bold leading-tight"
+                        className="text-[clamp(1.9rem,3.9vw,3.4rem)] font-bold leading-tight"
                         whileHover={{ scale: 1.02 }}
                     >
                         <span className="bg-[linear-gradient(135deg,var(--color-primary),var(--color-secondary))] bg-clip-text text-transparent">
-                            Digital Innovation
+                            We Build Digital Products
                         </span>
                         <br />
-                        <span className="text-foreground">Meets Excellence</span>
+                        <span className="text-foreground">for African Businesses</span>
                     </motion.h1>
+
+                    {/* Service categories tag line */}
+                    <motion.div
+                        variants={itemVariants}
+                        className="flex flex-wrap justify-center gap-2 text-sm font-medium"
+                    >
+                        {["Software", "Marketing", "Design", "Cybersecurity", "Blockchain"].map((tag) => (
+                            <span
+                                key={tag}
+                                className="px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-primary-foreground/80 backdrop-blur-sm"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </motion.div>
 
                     <motion.p
                         variants={itemVariants}
-                        className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
                     >
-                        We craft cutting-edge digital solutions that transform your vision into reality.
-                        From software development to digital marketing, we&apos;re your technology partners.
+                        From custom software to digital marketing campaigns — we&apos;re the technology partner
+                        that grows with your business.
                     </motion.p>
 
                     {/* CTA Buttons */}
@@ -115,31 +129,6 @@ const Hero = () => {
                                 </Link>
                             </Button>
                         </motion.div>
-                    </motion.div>
-
-                    {/* Stats */}
-                    <motion.div
-                        variants={itemVariants}
-                        className="grid grid-cols-3 gap-8 pt-16 border-t border-border"
-                    >
-                        {[
-                            { number: 500, label: "Projects Delivered" },
-                            { number: 50, label: "Happy Clients" },
-                            { number: 5, label: "Years Experience" },
-                        ].map((stat, index) => (
-                            <motion.div
-                                key={index}
-                                whileHover={{ scale: 1.05 }}
-                                className="text-center"
-                            >
-                                <div className="text-2xl md:text-3xl font-bold bg-[linear-gradient(135deg,var(--color-primary),var(--color-secondary))] bg-clip-text text-transparent">
-                                    <AnimatedCounter value={stat.number} />
-                                </div>
-                                <div className="text-sm text-muted-foreground mt-1">
-                                    {stat.label}
-                                </div>
-                            </motion.div>
-                        ))}
                     </motion.div>
                 </motion.div>
             </motion.div>
