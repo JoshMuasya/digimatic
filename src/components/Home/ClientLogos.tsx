@@ -14,8 +14,9 @@ const clients = [
     { name: "Kirie Scripts", abbr: "KS", logo: null },
 ]
 
-// Duplicate for seamless infinite scroll
-const allClients = [...clients, ...clients]
+// One half of the loop. Repeated so a half is wider than even very wide screens (~2600px);
+// otherwise the strip runs out and leaves a gap before it wraps.
+const loopGroup = [...clients, ...clients]
 
 const ClientLogos = () => {
     return (
@@ -58,24 +59,20 @@ const ClientLogos = () => {
                 ))}
             </motion.div>
 
-            {/* Carousel track */}
-            <div className="relative mb-8">
-                {/* Fade masks on edges */}
-                <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-10 bg-gradient-to-r from-background to-transparent" />
-                <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10 bg-gradient-to-l from-background to-transparent" />
-
-                <motion.div
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                        duration: 28,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                    className="flex items-center gap-10 w-max"
-                >
-                    {allClients.map((client, index) => (
-                        <div
+            {/* Logo loop. Edges fade out via a mask, so it blends with whatever background is behind it. */}
+            <div className="group/marquee mb-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6rem,black_calc(100%-6rem),transparent)]">
+                <div className="flex w-max animate-[marquee_48s_linear_infinite] group-hover/marquee:[animation-play-state:paused] motion-reduce:animate-none">
+                  {[0, 1].map((copy) => (
+                    <ul
+                        key={copy}
+                        aria-hidden={copy === 1}
+                        aria-label={copy === 0 ? "Clients" : undefined}
+                        className="flex shrink-0 items-center gap-10 pr-10"
+                    >
+                    {loopGroup.map((client, index) => (
+                        <li
                             key={index}
+                            aria-hidden={copy === 0 && index >= clients.length ? true : undefined}
                             className="flex-shrink-0 flex items-center justify-center w-44 h-16 rounded-xl
                                        border border-border/60 bg-card/50 backdrop-blur-sm
                                        hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
@@ -97,9 +94,11 @@ const ClientLogos = () => {
                                     </span>
                                 </div>
                             )}
-                        </div>
+                        </li>
                     ))}
-                </motion.div>
+                    </ul>
+                  ))}
+                </div>
             </div>
         </section>
     )

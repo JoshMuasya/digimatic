@@ -25,14 +25,14 @@ const formSchema = z.object({
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 })
 
-const Contact = () => {
+const Contact = ({ packageName }: { packageName?: string }) => {
   const [loading, setLoading] = useState(false)
 
   const contactInfo = [
     {
       icon: Mail,
       title: "Email Us",
-      detail: "hello@digimaticmarketers.com",
+      detail: "digimaticmarketers@gmail.com",
       description: "Send us an email anytime",
     },
     {
@@ -54,32 +54,33 @@ const Contact = () => {
     defaultValues: {
       name: "",
       email: "",
-      message: "",
+      message: packageName ? `I’m interested in the ${packageName} package.\n\n` : "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true)
     try {
-      // Example: send to API
-      await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       })
 
-      toast.success("✅ Request sent! We'll get back to you soon.")
-      form.reset()
-    } catch (error) {
-      toast.error("❌ Something went wrong. Please try again.")
+      if (!response.ok) throw new Error("Could not send the request")
+
+      toast.success("Request sent! We'll get back to you soon.")
+      form.reset({ name: "", email: "", message: "" })
+    } catch {
+      toast.error("Something went wrong. Please try again.")
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-14 sm:py-20">
+      <div className="site-container">
         {/* Contact Info Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           {contactInfo.map((info, index) => (
@@ -89,10 +90,10 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="text-center p-8 bg-gradient-to-br from-card via-secondary/20 to-primary/40 border border-glass-border rounded-2xl backdrop-blur-md hover:border-primary/30 transition-all duration-300"
+              className="text-center p-8 bg-gradient-glass border border-border rounded-2xl backdrop-blur-md hover:border-primary/30 transition-all duration-300"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6">
-                <info.icon className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-primary/15 border border-primary/25 rounded-xl flex items-center justify-center mx-auto mb-6">
+                <info.icon className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-foreground">
                 {info.title}
@@ -107,30 +108,69 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <motion.div
+            id="enquiry"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-card via-secondary/20 to-primary/40 border border-glass-border rounded-3xl p-8 backdrop-blur-md flex flex-col items-center justify-center"
+            className="bg-gradient-glass border border-border rounded-3xl p-8 backdrop-blur-md flex flex-col items-center justify-center"
           >
             <h2 className="text-3xl font-bold mb-6 text-foreground w-full">
               Send us a message
             </h2>
 
             <div className="w-full max-w-lg mx-auto">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name *</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Your name"
+                              className="bg-glass/50 border-glass-border"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email *</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="your@email.com"
+                              className="bg-glass/50 border-glass-border"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name *</FormLabel>
+                        <FormLabel>Message *</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Your name"
-                            className="bg-glass/50 border-glass-border"
+                          <Textarea
+                            rows={6}
+                            placeholder="Tell us about your project..."
+                            className="bg-glass/50 border-glass-border resize-none"
                             {...field}
                           />
                         </FormControl>
@@ -138,54 +178,16 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email *</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="your@email.com"
-                            className="bg-glass/50 border-glass-border"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
 
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message *</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          rows={6}
-                          placeholder="Tell us about your project..."
-                          className="bg-glass/50 border-glass-border resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button type="submit" size="lg" className="w-full group" disabled={loading}>
-                  {loading ? "Sending…" : "Send Message"}
-                  {!loading && <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
-                </Button>
-                <p className="text-xs text-muted-foreground text-center mt-2">
-                  We typically respond within 1 business day (Mon–Fri, 8 am–6 pm EAT).
-                </p>
-              </form>
-            </Form>
+                  <Button type="submit" size="lg" className="w-full group" disabled={loading}>
+                    {loading ? "Sending…" : "Send Message"}
+                    {!loading && <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center mt-2">
+                    We typically respond within 1 business day (Mon–Fri, 8 am–6 pm EAT).
+                  </p>
+                </form>
+              </Form>
             </div>
           </motion.div>
 
@@ -195,7 +197,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-card via-secondary/20 to-primary/40 border border-glass-border rounded-3xl p-8 backdrop-blur-md"
+            className="bg-gradient-glass border border-border rounded-3xl p-8 backdrop-blur-md"
           >
             <h2 className="text-3xl font-bold mb-6 text-foreground">
               Office Location
@@ -203,6 +205,7 @@ const Contact = () => {
             <div className="aspect-video bg-muted rounded-2xl mb-6 overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8524569715973!2d36.80117737372744!3d-1.2607462355961419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173f254ef62f%3A0xeb15618740b6ee3f!2sWestlands%20commercial%20center!5e0!3m2!1sen!2ske!4v1756331100244!5m2!1sen!2ske"
+                title="Map of Digimatic Marketers’ office"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

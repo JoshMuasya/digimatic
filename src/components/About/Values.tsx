@@ -48,13 +48,13 @@ const Values = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 px-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
             {values.map((value) => (
                 <motion.div
                     key={value.title}
                     variants={item}
-                    className="text-center p-6 rounded-2xl bg-gradient-to-br from-card to-primary/40 shadow-md hover:shadow-xl transition-all duration-300"
+                    className="text-center p-6 rounded-2xl border border-border bg-gradient-glass transition-all duration-300"
                 >
                     {/* Animated Gradient Ring */}
                     <div className="relative w-24 h-24 mx-auto mb-6">

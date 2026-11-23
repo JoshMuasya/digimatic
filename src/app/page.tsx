@@ -1,19 +1,29 @@
-import Hero from "@/components/Home/Hero";
+import PromoBanner from "@/components/PromoBanner";
+import CampaignFeature from "@/components/Home/CampaignFeature";
 import ClientLogos from "@/components/Home/ClientLogos";
+import Hero from "@/components/Home/Hero";
 import Project from "@/components/Home/Project";
+import ProjectProcess from "@/components/Home/ProjectProcess";
 import Services from "@/components/Home/Services";
 import Team from "@/components/Home/Team";
-import { PopupOnLoad } from "@/components/PopupOnLoad";
+import { getActivePromotion, isCampaignActive } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 export default function Home() {
+  const showCampaign = isCampaignActive();
+  const promotion = getActivePromotion();
+
   return (
-    <div className="min-h-screen bg-background">
-      <PopupOnLoad />
-      <Hero />
+    <>
+      {promotion && <PromoBanner promotion={promotion} />}
+      <Hero promotion={promotion} />
       <ClientLogos />
       <Services />
+      {showCampaign && <CampaignFeature />}
       <Project />
       <Team />
-    </div>
+      <ProjectProcess />
+    </>
   );
 }

@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
+import { projects, type ProjectCategory } from "@/lib/projects"
 
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -36,7 +37,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-type Category = "All" | "Web" | "App" | "NGO" | "E-commerce"
+type Category = "All" | ProjectCategory
 
 const CATEGORIES: Category[] = ["All", "Web", "App", "E-commerce", "NGO"]
 
@@ -45,86 +46,6 @@ const ProjectsSection = () => {
     const [activeCategory, setActiveCategory] = useState<Category>("All")
     const pathname = usePathname()
     const isProjectsPage = pathname.startsWith("/projects")
-
-    const projects = [
-        {
-            title: "Joshua Muasya – Portfolio",
-            shortDescription:
-                "A sleek and professional portfolio showcasing my skills and projects.",
-            longDescription:
-                "A modern and responsive developer portfolio built with Next.js and Tailwind CSS. Highlights my skills in full-stack development, animations, and optimized performance across devices.",
-            image: "/portfolio.png",
-            link: "https://josh-portfolio-eight.vercel.app/",
-            tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-            category: "Web" as Category,
-        },
-        {
-            title: "Nyiha-Mathenge Advocates",
-            shortDescription:
-                "A professional law firm website with modern design and clear service presentation.",
-            longDescription:
-                "A full-service law firm website built to establish trust and credibility. Features service breakdowns, lawyer profiles, a blog section, and client contact options with a clean, modern design.",
-            image: "/nma.png",
-            link: "https://nyihamathengelaw.com/",
-            tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-            category: "Web" as Category,
-        },
-        {
-            title: "Gatherly",
-            shortDescription:
-                "A modern event management platform currently in development, designed to simplify planning and coordination.",
-            longDescription:
-                "Gatherly is an innovative event management platform built to streamline event planning, coordination, and guest engagement. It will feature RSVP management, role-based access (admins, organizers, and staff), real-time updates, and an intuitive dashboard for seamless control.",
-            image: "/gatherly.png",
-            link: "https://gatherly-three-rho.vercel.app/",
-            tags: ["Next.js", "PostgreSQL", "Prisma"],
-            category: "App" as Category,
-        },
-        {
-            title: "Wilhide Bakers – Website",
-            shortDescription:
-                "A modern bakery website showcasing delightful products and ordering features. (Under Development)",
-            longDescription:
-                "A clean, elegant, and mobile-friendly website for Wilhide Bakers, designed with Next.js and Tailwind CSS. The platform highlights bakery products, custom cake options, and smooth browsing experiences.",
-            image: "/wilhide.png",
-            link: "https://wilhade-bakers.vercel.app/",
-            tags: ["Next.js", "Tailwind CSS", "E-commerce"],
-            category: "E-commerce" as Category,
-        },
-        {
-            title: "NEFEA – Network on Forest Enterprises in Africa",
-            shortDescription:
-                "A non-profit organization site promoting African gums and resins.",
-            longDescription:
-                "An international NGO website dedicated to promoting African gums and resins as key non-timber forest products. Includes organizational history, mission, resources, and initiatives across Africa.",
-            image: "/nefea.png",
-            link: "https://www.nefea.org/",
-            tags: ["WordPress", "Custom Theme", "SEO"],
-            category: "NGO" as Category,
-        },
-        {
-            title: "Twilight Luxe Creations",
-            shortDescription:
-                "An elegant event planning and management company website.",
-            longDescription:
-                "A premium event management website showcasing services such as planning, styling, catering, photography, entertainment, rentals, invitations, logistics, and corporate event solutions.",
-            image: "/luxe.png",
-            link: "https://twilight-luxe-creations.vercel.app/",
-            tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-            category: "Web" as Category,
-        },
-        {
-            title: "Kirie Scripts",
-            shortDescription:
-                "A minimal project website currently under development.",
-            longDescription:
-                "Kirie Scripts is a work-in-progress project with future potential for automation tools and custom scripts. The site is currently in its early stages of development.",
-            image: "/kirie.png",
-            link: "https://kirie-scripts.vercel.app/",
-            tags: ["Next.js", "TypeScript"],
-            category: "App" as Category,
-        },
-    ]
 
     const filtered =
         activeCategory === "All"
@@ -159,8 +80,8 @@ const ProjectsSection = () => {
     }
 
     return (
-        <section className="relative py-20 px-6 sm:px-12 bg-card/60 backdrop-blur-sm border-t border-border">
-            <div className="max-w-7xl mx-auto text-center">
+        <section className="relative py-14 sm:py-20 bg-card/60 backdrop-blur-sm border-t border-border">
+            <div className="site-container text-center">
                 {/* Heading */}
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
@@ -195,10 +116,12 @@ const ProjectsSection = () => {
                         {CATEGORIES.map((cat) => (
                             <button
                                 key={cat}
+                                type="button"
+                                aria-pressed={activeCategory === cat}
                                 onClick={() => setActiveCategory(cat)}
                                 className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
                                     activeCategory === cat
-                                        ? "bg-gradient-to-br from-primary to-secondary text-white border-transparent shadow-[var(--shadow-elegant)]"
+                                        ? "bg-gradient-to-br from-primary to-secondary text-primary-foreground border-transparent shadow-[var(--shadow-elegant)]"
                                         : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
                                 }`}
                             >
@@ -239,7 +162,7 @@ const ProjectsSection = () => {
                                         className="object-cover transform group-hover:scale-105 transition-transform duration-500"
                                     />
                                     {/* Category badge on image */}
-                                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/80 text-white backdrop-blur-sm">
+                                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary text-primary-foreground backdrop-blur-sm">
                                         {project.category}
                                     </span>
                                 </div>
@@ -282,12 +205,12 @@ const ProjectsSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="mt-16 bg-gradient-to-r from-primary/90 to-secondary/90 rounded-2xl p-10 shadow-lg"
+                    className="mt-12 rounded-3xl border border-primary/25 bg-gradient-glass p-6 sm:p-10"
                 >
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                         {isProjectsPage ? "Ready to start your project?" : "Want to work with us?"}
                     </h3>
-                    <p className="text-white/80 mb-6 max-w-2xl mx-auto">
+                    <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                         {isProjectsPage
                             ? "Tell us more about your project or reach out directly."
                             : "Let's bring your ideas to life with our expertise in design and development."}
@@ -296,16 +219,12 @@ const ProjectsSection = () => {
                     <div className="flex flex-wrap gap-4 justify-center">
                         {!isProjectsPage ? (
                             <>
-                                <Link href="/projects">
-                                    <Button variant="secondary" className="rounded-xl">
-                                        View All Projects
-                                    </Button>
-                                </Link>
-                                <Link href="/contact">
-                                    <Button className="rounded-xl bg-white text-primary hover:bg-gray-100">
-                                        Contact Us
-                                    </Button>
-                                </Link>
+                                <Button asChild variant="secondary">
+                                    <Link href="/projects">View All Projects</Link>
+                                </Button>
+                                <Button asChild variant="outline">
+                                    <Link href="/contact">Contact Us</Link>
+                                </Button>
                             </>
                         ) : (
                             <>
@@ -391,11 +310,9 @@ const ProjectsSection = () => {
                                     </DialogContent>
                                 </Dialog>
 
-                                <Link href="/contact">
-                                    <Button className="rounded-xl bg-white text-primary hover:bg-gray-100">
-                                        Contact Us
-                                    </Button>
-                                </Link>
+                                <Button asChild variant="outline">
+                                    <Link href="/contact">Contact Us</Link>
+                                </Button>
                             </>
                         )}
                     </div>

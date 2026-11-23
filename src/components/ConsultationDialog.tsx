@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,6 +11,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogDescription,
+    DialogTrigger,
 } from "@/components/ui/dialog"
 import {
     Form,
@@ -32,14 +33,9 @@ const FormSchema = z.object({
     message: z.string().min(10, "Message must be at least 10 characters"),
 })
 
-export function PopupOnLoad() {
+export function ConsultationDialog() {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
-
-    // Auto open popup when page loads
-    useEffect(() => {
-        setOpen(true)
-    }, [])
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -53,18 +49,19 @@ export function PopupOnLoad() {
     async function onSubmit(values: z.infer<typeof FormSchema>) {
         setLoading(true)
         try {
-            // Example: send to API
-            await fetch("/api/contact", {
+            const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
             })
 
-            toast.success("✅ Request sent! We'll get back to you soon.")
+            if (!response.ok) throw new Error("Could not send the request")
+
+            toast.success("Request sent! We'll get back to you soon.")
             setOpen(false)
             form.reset()
-        } catch (error) {
-            toast.error("❌ Something went wrong. Please try again.")
+        } catch {
+            toast.error("Something went wrong. Please try again.")
         } finally {
             setLoading(false)
         }
@@ -72,17 +69,22 @@ export function PopupOnLoad() {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="max-w-lg border border-[var(--border)] shadow-[var(--shadow-elegant),var(--shadow-glow)] overflow-hidden">
+            <DialogTrigger asChild>
+                <Button variant="link" className="mt-3 h-auto px-0 py-2">
+                    Book a Free 30-Minute Consultation
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto border-border shadow-[var(--shadow-elegant)]">
                 {/* Animate popup content */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 40 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="bg-gradient-to-br from-primary via-secondary/60 to-primary text-foreground p-6 rounded-lg"
+                    className="rounded-xl border border-border bg-gradient-glass p-5 text-foreground"
                 >
                     <DialogHeader>
                         <DialogTitle className="text-xl font-semibold">
-                            🎁 Free 30-Minute Consultation
+                            Free 30-Minute Consultation
                         </DialogTitle>
                         <DialogDescription className="text-[var(--muted-foreground)]">
                             Fill out the form below and our team will reach out to schedule your consultation.

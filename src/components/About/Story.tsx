@@ -88,7 +88,7 @@ const Story = () => {
                     className="grid grid-cols-3 gap-8 pt-16"
                 >
                     {[
-                        { number: 500, label: "Projects Delivered" },
+                        { number: 100, label: "Projects Delivered" },
                         { number: 50, label: "Happy Clients" },
                         { number: 5, label: "Years Experience" },
                     ].map((stat, index) => (

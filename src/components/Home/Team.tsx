@@ -111,8 +111,8 @@ const Team = () => {
     };
 
     return (
-        <section className="relative py-20 bg-gradient-to-tl from-primary via-secondary/20 to-background text-foreground">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <section className="border-y border-border bg-card/40 py-14 text-foreground sm:py-20">
+            <div className="site-container text-center">
                 {/* Heading */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -203,7 +203,7 @@ const Team = () => {
                         onClick={() => setIsOpen(true)}
                         className="inline-block px-8 py-4 rounded-full 
                            bg-gradient-to-r from-primary to-secondary 
-                           text-white font-semibold 
+                           text-primary-foreground font-semibold
                            shadow-[var(--shadow-elegant)] 
                            hover:shadow-[var(--shadow-glow)] 
                            transition"
@@ -286,7 +286,7 @@ const Team = () => {
                                 {/* Submit Button */}
                                 <Button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-glow)]"
+                                    className="w-full"
                                 >
                                     Submit Application
                                 </Button>

@@ -7,7 +7,7 @@ import { ArrowLeft, Home } from "lucide-react"
 
 export default function NotFound() {
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="site-hero flex min-h-[55vh] items-center justify-center px-4 py-16">
             {/* Ambient glow blobs */}
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
@@ -54,7 +54,7 @@ export default function NotFound() {
                     transition={{ duration: 0.5, delay: 0.45 }}
                     className="flex flex-col sm:flex-row gap-3 justify-center"
                 >
-                    <Button asChild size="lg" className="bg-gradient-to-br from-primary to-secondary text-white group">
+                    <Button asChild size="lg" className="group">
                         <Link href="/">
                             <Home className="mr-2 w-4 h-4" />
                             Go Home

@@ -23,7 +23,7 @@ export default function ContactSection() {
                     <div className="space-y-4">
                         <div className="flex items-center space-x-4">
                             <FaEnvelope className="text-purple-400 w-6 h-6" />
-                            <span>hello@digimatic.com</span>
+                            <span>digimaticmarketers@gmail.com</span>
                         </div>
                         <div className="flex items-center space-x-4">
                             <FaPhoneAlt className="text-purple-400 w-6 h-6" />

@@ -11,6 +11,7 @@ import {
   Palette,
   Shield,
   CheckCircle2,
+  Smartphone,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
@@ -82,11 +83,24 @@ const ServicesCards = () => {
     },
     {
       icon: Monitor,
-      title: "Website & Mobile Apps",
+      title: "Websites",
       description:
-        "Responsive websites and mobile applications that engage users and drive results.",
+        "Responsive websites that engage users and drive results.",
       features: ["Responsive Design", "Mobile Apps", "E-commerce", "CMS Solutions"],
-      startingFrom: "KES 30,000",
+      startingFrom: "KES 10,000",
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile Apps",
+      description:
+        "High-performance mobile applications built to help businesses reach customers anywhere, anytime.",
+      features: [
+        "Android Development",
+        "iOS Development",
+        "Flutter Apps",
+        "API Integration"
+      ],
+      startingFrom: "KES 50,000",
     },
     {
       icon: Megaphone,
@@ -150,8 +164,7 @@ const ServicesCards = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 overflow-hidden py-20 px-4 sm:px-6 lg:px-8
-                 bg-gradient-to-b from-background via-background/95 to-background shadow-[6px_0_12px_0_#6A0DAD99]"
+      className="relative overflow-hidden py-14 sm:py-20"
     >
       {/* Top Divider Transition from Hero */}
       <div className="absolute -top-16 left-0 w-full overflow-hidden leading-none">
@@ -178,7 +191,7 @@ const ServicesCards = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-secondary/10 to-transparent" />
       </motion.div>
 
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative site-container">
         {/* Heading + Subtitle (Heading Treatment) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -222,7 +235,7 @@ const ServicesCards = () => {
                               group-hover:border-primary/40 transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center mb-6
                                 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <service.icon className="w-8 h-8 text-white" />
+                  <service.icon className="w-8 h-8 text-primary-foreground" />
                 </div>
 
                 <h3 className="text-2xl font-bold mb-4 text-foreground">{service.title}</h3>
